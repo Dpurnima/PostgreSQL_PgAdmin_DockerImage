@@ -4,48 +4,35 @@ You can create your own Docker image by using `Dockerfile` if there is no Docker
 
 ## Dockerfile For PostgreSQL
 
-This Dockerfile creates the postgreSQL image by copying the License key and PostgreSQL respository for installing it. And it also creates a `User` with `Password` inside which creates an Empty Database which could help us in future steps.
+The Dockerfile given creates the postgreSQL image by copying the License key and PostgreSQL respository for installing it. And it also creates a `User` with `Password` inside which creates an Empty Database which could help us in future steps.
+
+For Building this Dockerfile in command Prompt use the below given command:
 
 ```
-FROM ubuntu
+$ docker build -t (imageName) .
+```
+Example:
 
-# Add the PostgreSQL PGP key to verify their Debian packages.
-# It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
-RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
+    $ docker build -t img_postgresql .
+    
+Here, Option -t is used to name the image ascontentserverimage, image name should always be in lowercase alphabets and should not contain anyspaces . This command could create a Docker image named `img_postgresql`.
 
-# Add PostgreSQL's repository. It contains the most recent stable release of PostgreSQL, ``9.3``.
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+You can check the image created using command 
+    `$ docker images`
 
-# Install ``python-software-properties``, ``software-properties-common`` and PostgreSQL 9.3
-#  There are some warnings (in red) that show up during the build. You can hide them by prefixing each apt-get statement with DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y python-software-properties software-properties-common postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3
-
-
-# Run the rest of the commands as the ``postgres`` user created by the ``postgres-9.3`` package when it was ``apt-get installed``
-USER postgres
-
-# Create a PostgreSQL role named ``docker`` with ``docker`` as the password and then create a database `docker` owned by the ``docker`` role.
-# Note: here we use ``&&\`` to run commands one after the other - the ``\``
-#       allows the RUN command to span multiple lines.
-RUN    /etc/init.d/postgresql start &&\
-    psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" &&\
-    createdb -O docker docker
-
-# Adjust PostgreSQL configuration so that remote connections to the
-# database are possible.
-RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf
-
-# And add ``listen_addresses`` to ``/etc/postgresql/9.3/main/postgresql.conf``
-RUN echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
-
-# Expose the PostgreSQL port
-EXPOSE 5432
-
-# Add VOLUMEs to allow backup of config, logs and databases
-VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
-
-# Set the default command to run when starting the container
-CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main", "-c", "config_file=/etc/postgresql/9.3/main/postgresql.conf"]
+To Run this image:
 
 ```
+$ docker run -it --name (containerName) (postgresQL_imageName)
+```
+Example:
+
+    $ docker run -it --name cnt_postgresql img_postgresql
+    
+This will successfully create the PostgreSQL container named `cnt_postgresql`. The Option '--name' is used to give the proper name to container which should not have any spaces between and the -Flag '-it' is used to  run container interactively and attached to your terminal.
+
+Now, using the command `$ docker ps` you could see the container created in the name given (say cnt_postgresql).
+
+## Testing the Database created
+As mentioned above, to make sure that a empty database named `docker` is created during the build using the username `docker` and password `docker`
 
