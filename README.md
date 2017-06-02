@@ -71,7 +71,7 @@ $ docker inspect cont_postgresql
 
 This will render all the information about the cotainer in a JSON array.
 
-![ContainerIpAddress](https://github.com/Dpurnima/myRepo/containerIpAddress.PNG)
+![ContainerIpAddress](https://github.com/Dpurnima/myRepo/blob/master/containerIpAddress.PNG)
 
 ## Testing the Database Created
 
