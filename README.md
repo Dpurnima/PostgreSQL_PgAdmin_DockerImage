@@ -49,7 +49,7 @@ This will create a new Bash session in the container cont_postgresql.
 Now, you are inside the container and can execute the postgreSQL commands. The following basic postgresql command helps in authenticating and login to the postgres
 
 ```
-$ psql -U (Username) -h (docker_Container_IPAddress) -p (portNumber)
+$ psql -U (Username) -h (docker_PgClient_Container_IPAddress) -p (portNumber)
 ```
 
 According to this Example:
@@ -59,14 +59,14 @@ $ psql -U docker -h 172.17.0.2 -p 5432
 
 > NOTE: The Port `5432` is the default port number for postgreSQL using the command
 
-The Docker container IPAdress can be found using the command:
+The Docker PostgreSQL_client container IPAdress can be found using the command:
 ```
-$ docker inspect (containerName)
+$ docker inspect (postgresql-client_containerName)
 ```
 
 Example:
 ```
-$ docker inspect cont_postgresql
+$ docker inspect pgadmin
 ```
 
 This will render all the information about the cotainer in a JSON array.
@@ -75,16 +75,13 @@ This will render all the information about the cotainer in a JSON array.
 
 ## Testing the Database Created
 
-Once you have authenticated and will have a `docker =#` prompt and you can make use of the postgresql database. As mentioned above, to make sure that a empty database named `docker` is created during the build using the username `docker` and password `docker`
+Once you have authenticated and will have a `docker =#` prompt and you can make use of the postgresql database. As mentioned above, to make sure that a empty database named `docker` is created you can see in the list of databases and can manipulate in it.
 
 ```
 psql (9.3.1)
 Type "help" for help.
 
 $ \l
-```
-This gives the list of databases and you could see the docker database created.
-```
              List of Databases
 |        Name      |         owner      |
 |docker            |        docker      |
@@ -109,3 +106,13 @@ $ docker=# select * from cities;
 ```
 
 ## PgAdmin
+You can use the above created Docker Container in the terminal itself. In such case if we need a client interaction, we have to make use of any `Postgresql-client`. One such popular postgresql-client is `pgAdmin`. Creating a Container for pgAdmin and port-forwarding the PostgreSQL database to PgAdmin gives the User Interface for postgreSQL database.
+
+Creating the pgAdmin image:
+```
+$ docker run --name (PgAdminName) -d -p (hostPort):(ContainerPort) fenglc/pgadmin4
+```
+Example:
+```
+$ docker run --name pgadmin_img -d -p 5050:5050 fenglc/pgadmin4
+```
