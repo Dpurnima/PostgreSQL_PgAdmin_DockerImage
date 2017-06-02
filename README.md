@@ -71,8 +71,41 @@ $ docker inspect cont_postgresql
 
 This will render all the information about the cotainer in a JSON array.
 
-![alt text](http://url/to/img.png)
+![ContainerIpAddress](https://github.com/Dpurnima/myRepo/containerIpAddress.PNG)
 
 ## Testing the Database Created
-As mentioned above, to make sure that a empty database named `docker` is created during the build using the username `docker` and password `docker`
 
+Once you have authenticated and will have a `docker =#` prompt and you can make use of the postgresql database. As mentioned above, to make sure that a empty database named `docker` is created during the build using the username `docker` and password `docker`
+
+```
+psql (9.3.1)
+Type "help" for help.
+
+$ \l
+```
+This gives the list of databases and you could see the docker database created.
+```
+             List of Databases
+|        Name      |         owner      |
+|docker            |        docker      |
+|postgres          |        postgres    |
+|template0         |        postgres    |
+|template1         |        postgres    |
+```
+Create a table in database `docker`:
+```
+$ docker=# CREATE TABLE cities (
+docker(#     name            varchar(80),
+docker(#     location        varchar(50)
+docker(# );
+CREATE TABLE
+$ docker=# INSERT INTO cities VALUES ('Divya', 'India');
+INSERT 0 1
+$ docker=# select * from cities;
+     name      | location
+---------------+-----------
+ Divya         | India
+(1 row)
+```
+
+## PgAdmin
