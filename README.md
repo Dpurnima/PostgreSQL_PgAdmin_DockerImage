@@ -44,34 +44,15 @@ Example:
 $ docker exec -it cont_postgresql bash
 ```
 
-This will create a new Bash session in the container cont_postgresql.
+This will create a new Bash session in the container cont_postgresql in terminal.
 
-Now, you are inside the container and can execute the postgreSQL commands. The following basic postgresql command helps in authenticating and login to the postgres
+We can make use of this postgresql database in terminal itself. But for the user intraction we have to make use of postgresql-client. Here we are making use of popular client for PostgreSQL `pgAdmin`.
+
+Now, you are inside the container and can execute the postgreSQL commands. The following basic postgresql command helps in authenticating and login to the postgres 
 
 ```
-$ psql -U (Username) -h (docker_PgClient_Container_IPAddress) -p (portNumber)
+$ psql -h $PG_PORT_5432_TCP_ADDR -p $PG_PORT_5432_TCP_PORT -d docker -U docker --password
 ```
-
-According to this Example:
-```
-$ psql -U docker -h 172.17.0.2 -p 5432
-```
-
-> NOTE: The Port `5432` is the default port number for postgreSQL using the command
-
-The Docker PostgreSQL_client container IPAdress can be found using the command:
-```
-$ docker inspect (postgresql-client_containerName)
-```
-
-Example:
-```
-$ docker inspect pgadmin
-```
-
-This will render all the information about the cotainer in a JSON array.
-
-![ContainerIpAddress](https://github.com/Dpurnima/myRepo/blob/master/containerIpAddress.PNG)
 
 ## Testing the Database Created
 
@@ -116,3 +97,31 @@ Example:
 ```
 $ docker run --name pgadmin_img -d -p 5050:5050 fenglc/pgadmin4
 ```
+
+For making use of this postgresql-client find the IpAddress of this container and make use of it for port forwarding.
+
+```
+$  psql -U (userName) -h (postgresql-client_IpAddress) -p (PortOfPgAdmin)
+```
+
+Example:
+```
+$ psql -U docker -h 172.17.0.2 -p 5432
+```
+
+> NOTE: The Port `5432` is the default port number for postgreSQL using the command
+
+The Docker PostgreSQL_client container IPAdress can be found using the command:
+```
+$ docker inspect (postgresql-client_containerName)
+```
+
+Example:
+```
+$ docker inspect pgadmin
+```
+
+This will render all the information about the cotainer in a JSON array.
+
+![ContainerIpAddress](https://github.com/Dpurnima/myRepo/blob/master/containerIpAddress.PNG)
+
