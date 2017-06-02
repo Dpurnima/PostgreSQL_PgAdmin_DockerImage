@@ -125,3 +125,9 @@ This will render all the information about the cotainer in a JSON array.
 
 ![ContainerIpAddress](https://github.com/Dpurnima/myRepo/blob/master/containerIpAddress.PNG)
 
+Now, It is successfully built and by opening the browser with the `host_IpAddress : port_number` will open up the pgAdmin Interface.
+
+```
+http://localhost:5050
+```
+
