@@ -48,7 +48,7 @@ This will create a new Bash session in the container cont_postgresql in terminal
 
 We can make use of this postgresql database in terminal itself. But for the user intraction we have to make use of postgresql-client. Here we are making use of popular client for PostgreSQL `pgAdmin`.
 
-Now, you are inside the container and can execute the postgreSQL commands. The following basic postgresql command helps in authenticating and login to the postgres 
+Now, you are inside the container and can execute the postgreSQL commands. The following basic postgresql command helps in authenticating and login into the postgres 
 
 ```
 $ psql -h $PG_PORT_5432_TCP_ADDR -p $PG_PORT_5432_TCP_PORT -d docker -U docker --password
@@ -73,7 +73,7 @@ $ \l
 Create a table in database `docker`:
 ```
 $ docker=# CREATE TABLE cities (
-docker(#     name            varchar(80),
+no
 docker(#     location        varchar(50)
 docker(# );
 CREATE TABLE
@@ -98,7 +98,7 @@ Example:
 $ docker run --name pgadmin_img -d -p 5050:5050 fenglc/pgadmin4
 ```
 
-For making use of this postgresql-client find the IpAddress of this container and make use of it for port forwarding.
+For making use of this postgresql-client find the IpAddress of this container and make use of it for port forwarding in the postgresql container as given below:
 
 ```
 $  psql -U (userName) -h (postgresql-client_IpAddress) -p (PortOfPgAdmin)
@@ -125,9 +125,9 @@ This will render all the information about the cotainer in a JSON array.
 
 ![ContainerIpAddress](https://github.com/Dpurnima/myRepo/blob/master/containerIpAddress.PNG)
 
-Now, It is successfully built and by opening the browser with the `host_IpAddress : port_number` will open up the pgAdmin Interface.
+Now, It is successfully built and by opening the browser with the `host_IpAddress : port_number` will open up the pgAdmin User Interface.
 
 ```
 http://localhost:5050
 ```
-
+> NOTE : We can also make use of Docker Ip address in the place of host_IpAddress in case of connecting a container with another container.
