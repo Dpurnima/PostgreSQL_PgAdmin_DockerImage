@@ -91,14 +91,15 @@ You can use the above created Docker Container in the terminal itself. In such c
 
 Creating the pgAdmin image:
 ```
-$ docker run --name (PgAdminName) -d -p (hostPort):(ContainerPort) fenglc/pgadmin4
+$ docker run --name (PgAdminContainerName) -d -p (hostPort):(ContainerPort) fenglc/pgadmin4
 ```
 Example:
 ```
-$ docker run --name pgadmin_img -d -p 5050:5050 fenglc/pgadmin4
+$ docker run --name pgadmin_cont -d -p 5050:5050 fenglc/pgadmin4
 ```
+This creates a container of pgAdmin in the name of `pgadmin_cont` by using the pre-built image `fenglc/pgadmin4` in the Docker Hub and can check it in your terminal by using `$ docker ps` command.
 
-For making use of this postgresql-client find the IpAddress of this container and make use of it for port forwarding in the postgresql container as given below:
+For making use of this postgresql-client container, find the IpAddress of this container in the docker machine and make use of it for port forwarding in the postgresql command as given below:
 
 ```
 $  psql -U (userName) -h (postgresql-client_IpAddress) -p (PortOfPgAdmin)
@@ -111,7 +112,7 @@ $ psql -U docker -h 172.17.0.2 -p 5432
 
 > NOTE: The Port `5432` is the default port number for postgreSQL using the command
 
-The Docker PostgreSQL_client container IPAdress can be found using the command:
+The Docker PostgreSQL_client container IPAddress can be found using the command:
 ```
 $ docker inspect (postgresql-client_containerName)
 ```
@@ -130,4 +131,5 @@ Now, It is successfully built and by opening the browser with the `host_IpAddres
 ```
 http://localhost:5050
 ```
-> NOTE : We can also make use of Docker Ip address in the place of host_IpAddress in case of connecting a container with another container.
+> NOTE : We can also make use of Docker Ip address in the place of host_IpAddress in case of connecting a container with another container in same machine.
+ 
