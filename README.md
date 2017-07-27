@@ -80,9 +80,9 @@ CREATE TABLE
 $ docker=# INSERT INTO cities VALUES ('Divya', 'India');
 INSERT 0 1
 $ docker=# select * from cities;
-     name      | location
----------------+-----------
- Divya         | India
+    name      | location
+--------------+------------
+   Divya      | India
 (1 row)
 ```
 
